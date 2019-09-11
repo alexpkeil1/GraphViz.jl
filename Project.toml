@@ -1,0 +1,7 @@
+name = "GraphViz"
+uuid = "16d363e1-28f1-5f2b-b949-57f6f2d5f8ba"
+version = "0.1.1"
+
+[deps]
+BinDeps = "9e28174c-4ba2-5203-b857-d8d62c4213ee"
+Homebrew = "d9be37ee-ecc9-5288-90f1-b9ca67657a75"
