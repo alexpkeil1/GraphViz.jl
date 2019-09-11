@@ -1,8 +1,11 @@
 using BinDeps
+using Libdl
+using Pkg
 
 # Configuration / Autodetections
-const x11 = is_unix() ? !is_apple() : false
-const gtk = isdir(Pkg.dir("Gtk"))
+const x11 = Sys.isunix() ? !Sys.isapple() : false
+#const gtk = isdir(Pkg.dir("Gtk"))
+const gtk = false
 
 @BinDeps.setup
 
@@ -13,7 +16,7 @@ gvc = library_dependency("gvc",aliases = ["libgvc"])
 
 graphviz = [cgraph,gvc]
 
-if is_apple()
+if Sys.isapple()
     using Homebrew
     provides( Homebrew.HB, "graphviz", graphviz, os = :Darwin, preload = """
     module GraphVizInit
@@ -33,7 +36,7 @@ push!(options,"--without-qt")
 push!(options,"--with-pangocairo")
 push!(options,"--enable-debug")
 
-provides(Sources,URI("http://www.graphviz.org/pub/graphviz/stable/SOURCES/graphviz-2.36.0.tar.gz"),graphviz)
+provides(Sources,URI("https://graphviz.gitlab.io/pub/graphviz/stable/SOURCES/graphviz.tar.gz"),graphviz)
 provides(BuildProcess,Autotools(libtarget = "lib/cgraph/.libs/libcgraph."*BinDeps.shlib_ext,configure_options=options,
     pkg_config_dirs=[Pkg.dir("Cairo","deps","usr","lib","pkgconfig")]),graphviz)
 
